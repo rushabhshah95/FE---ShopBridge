@@ -1,0 +1,109 @@
+<!-- This is view template for create product page -->
+<section>
+  <div class="container">
+    <h4 class="text-center"><u>Add Product</u></h4>
+    <div class="col-md-12 col-xs-12">
+      <div class="form">
+        <!-- Add product Form -->
+        <form [formGroup]="addProductForm" (ngSubmit)="onSubmit(addProductForm.value)">
+          <!--DIV to display form validation messages -->
+          <div class="text-center" *ngIf="showProductCreateSuccessMsg || showProductCreateFailMsg">
+            <div>
+              <p class="success-message"  *ngIf="showProductCreateSuccessMsg">
+                  <strong>{{ productCreateSuccessMsg }}</strong>
+              </p>
+            </div>
+            <div>
+              <p class="error-message"  *ngIf="showProductCreateFailMsg">
+                <strong>{{ productCreateFailMsg }}</strong>
+            </p>
+            </div>
+          </div>
+          <!--DIV for input field Product Name and it's field validation messages-->
+          <div class="form-group">
+            <label>Product Name:</label>
+            <input type="text" 
+            formControlName="productName" 
+            class="form-control" 
+            [ngClass]="{'form-submitted': formSubmitted}"
+            />
+            <div *ngIf="addProductForm.controls['productName'].errors?.required &&
+            addProductForm.controls['productName'].touched"
+              class="error-message">
+                You need to enter name of product.
+            </div>   
+            <div *ngIf="addProductForm.controls['productName'].errors?.maxlength &&
+            addProductForm.controls['productName'].touched"
+                class="error-message">
+                  Product name should not contains more than 20 alphabets.
+            </div>
+            <div *ngIf="addProductForm.controls['productName'].errors?.pattern &&
+            addProductForm.controls['productName'].touched"
+                class="error-message">
+                  Product name must contain Alphabets along with space.
+            </div>    
+          </div>
+           <!--DIV for input field Product Description and it's field validation messages-->
+          <div class="form-group">
+            <label>Product Description:</label>
+            <textarea 
+            formControlName="productDesc" 
+            class="form-control"
+            [ngClass]="{'form-submitted': formSubmitted}"
+            > 
+            </textarea>
+            <div *ngIf="addProductForm.controls['productDesc'].errors?.required &&
+            addProductForm.controls['productDesc'].touched"
+              class="error-message">
+                You need to enter brief description of product.
+            </div>       
+            <div *ngIf="addProductForm.controls['productDesc'].errors?.maxlength &&
+            addProductForm.controls['productDesc'].touched"
+                class="error-message">
+                  Product description should not contains more than 50 characters.
+            </div>
+            <div *ngIf="addProductForm.controls['productDesc'].errors?.pattern &&
+            addProductForm.controls['productDesc'].touched"
+                class="error-message">
+                  Product description must not contain special characters.
+            </div>    
+          </div>
+          <!--DIV for input field Product Price and it's field validation messages-->
+          <div class="form-group">
+            <label>Product Price:</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input
+              type="text"
+              class="form-control"
+              formControlName="productPrice"
+              [ngClass]="{'form-submitted': formSubmitted}"
+              />
+            </div>
+
+            <div *ngIf="addProductForm.controls['productPrice'].errors?.required &&
+              addProductForm.controls['productPrice'].touched"
+              class="error-message">
+              You need to enter price of product.
+            </div>
+               
+            <div *ngIf="addProductForm.controls['productPrice'].errors?.pattern &&
+              addProductForm.controls['productPrice'].touched"
+              class="error-message">
+              Product price should be in digits upto two decimals. 
+            </div>               
+          </div>
+          <!--DIV for submit button and icon wrapper-->
+          <div class="form-group">
+            <button class="btn btn-primary" [disabled]="addProductForm.invalid">
+              <fa-icon [icon]="addIcon"></fa-icon>&nbsp;Add Product
+            </button>
+          </div>
+        </form>     
+        <!--Add Product From ends here-->
+      </div>
+    </div>
+  </div>
+</section>
